@@ -3,7 +3,10 @@ using System.Formats.Asn1;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 using PactNet;
+using WeatherService;
 using WeatherService.Contexts;
 using static System.String;
 
@@ -26,13 +29,21 @@ namespace WeatherService_Contract.Middleware
 
             _providerStates = new Dictionary<string, Func<IDictionary<string, string>, string, Task>>
             {
-                                
+                {
+                    "Two weather requests exist with ids 4831b360-e00e-4e99-990a-5f9bd8a94eb7,cd29b446-2570-45ed-b4f8-1909277b3a4c",
+                    SetForecastData
+                }
             };
         }
 
         public async Task SetForecastData(IDictionary<string, string> parameters, string state) 
         {
-            var t = "";
+            _forecastContext.RemoveRange(_forecastContext.Forecasts);
+            _forecastContext.SaveChanges();
+            var forecasts = await GetTestData<WeatherForecast[]>(state);
+            _forecastContext.AddRange(forecasts);
+            _forecastContext.SaveChanges();
+
         }
 
         public async Task InvokeAsync(HttpContext context, ForecastContext forecastContext)
@@ -55,7 +66,7 @@ namespace WeatherService_Contract.Middleware
                     jsonRequestBody = await reader.ReadToEndAsync();
                 }
 
-                var providerState = JsonSerializer.Deserialize<ProviderState>(jsonRequestBody, Options);
+                var providerState = System.Text.Json.JsonSerializer.Deserialize<ProviderState>(jsonRequestBody, Options);
 
                 //A null or empty provider state key must be handled
                 if (!IsNullOrEmpty(providerState?.State))
@@ -65,6 +76,16 @@ namespace WeatherService_Contract.Middleware
 
                 await context.Response.WriteAsync(String.Empty);
             }
+        }
+
+        private async Task<T?> GetTestData<T>(string state) where T : class
+        {
+            var basePath = Path.GetDirectoryName(typeof(ProviderStateMiddleware).Assembly.Location); ;
+            var dataFilePath = Path.Combine(basePath!, "data", $"{state}.json");
+            var fileData = File.Exists(dataFilePath) ? await File.ReadAllTextAsync(dataFilePath) : null;
+            var searchData = IsNullOrEmpty(fileData) ? null : JsonConvert.DeserializeObject<T>(fileData);
+
+            return searchData;
         }
     }
 }

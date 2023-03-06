@@ -7,7 +7,7 @@
       "description": "A GET that returns all weather forecasts",
       "providerStates": [
         {
-          "name": "Two weather requests exist with ids: [4831b360-e00e-4e99-990a-5f9bd8a94eb7,cd29b446-2570-45ed-b4f8-1909277b3a4c]"
+          "name": "Two weather requests exist with ids 4831b360-e00e-4e99-990a-5f9bd8a94eb7,cd29b446-2570-45ed-b4f8-1909277b3a4c"
         }
       ],
       "request": {
@@ -17,18 +17,18 @@
       "response": {
         "body": [
           {
-            "Date": "2023-01-01T00:00:00",
-            "Id": "4831b360-e00e-4e99-990a-5f9bd8a94eb7",
-            "Summary": "Cool",
-            "TemperatureC": 15,
-            "TemperatureF": 58
+            "date": "2023-01-01T00:00:00",
+            "id": "4831b360-e00e-4e99-990a-5f9bd8a94eb7",
+            "summary": "Cool",
+            "temperatureC": 15,
+            "temperatureF": 58
           },
           {
-            "Date": "2023-02-02T00:00:00",
-            "Id": "cd29b446-2570-45ed-b4f8-1909277b3a4c",
-            "Summary": "Warm",
-            "TemperatureC": 25,
-            "TemperatureF": 76
+            "date": "2023-02-02T00:00:00",
+            "id": "cd29b446-2570-45ed-b4f8-1909277b3a4c",
+            "summary": "Warm",
+            "temperatureC": 25,
+            "temperatureF": 76
           }
         ],
         "headers": {
@@ -49,6 +49,6 @@
     }
   },
   "provider": {
-    "name": "ServiceLayer"
+    "name": "WeatherService"
   }
 }

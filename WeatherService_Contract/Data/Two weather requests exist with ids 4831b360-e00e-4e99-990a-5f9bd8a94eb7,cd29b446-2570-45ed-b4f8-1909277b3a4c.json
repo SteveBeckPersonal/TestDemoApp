@@ -1,0 +1,16 @@
+[
+    {
+        "Date": "2023-01-01T00:00:00",
+        "Id": "4831b360-e00e-4e99-990a-5f9bd8a94eb7",
+        "Summary": "Cool",
+        "TemperatureC": 15,
+        "TemperatureF": 58
+    },
+    {
+        "Date": "2023-02-02T00:00:00",
+        "Id": "cd29b446-2570-45ed-b4f8-1909277b3a4c",
+        "Summary": "Warm",
+        "TemperatureC": 25,
+        "TemperatureF": 76
+    }
+]

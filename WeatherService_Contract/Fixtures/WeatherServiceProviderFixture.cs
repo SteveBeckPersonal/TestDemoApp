@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using WeatherService;
 
 namespace WeatherService_Contract.Fixtures
 {
     public  class WeatherServiceProviderFixture
     {
         private readonly IHost _host;
+        public string PactVersion { get; set; }
         public readonly Uri ServerUri;
         public readonly Uri BrokerBaseUri;
         public readonly string? PactBrokerToken;
@@ -31,13 +33,20 @@ namespace WeatherService_Contract.Fixtures
 
 
             ServerUri = new Uri(configs["ServerUri"]);
-            //BrokerBaseUri = new Uri(configs["BrokerBaseUri"]);
-            //PactBrokerToken = Environment.GetEnvironmentVariable("PACT_BROKER_TOKEN");
+            BrokerBaseUri = new Uri(configs["BrokerBaseUri"]);
+            PactBrokerToken = configs["PactBrokerToken"];
+            PactVersion = configs["PROVIDER_VERSION"];
 
-                 
 
-            var application = new MyWebApplication();
-            TestServer server = application.Server;
+
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseUrls(ServerUri.ToString());
+                    webBuilder.UseStartup<TestStartup>()
+                        .UseSetting(WebHostDefaults.ApplicationKey, typeof(Startup).Assembly.FullName);
+                }).Build();
+            _host.Start();
         }
 
     }

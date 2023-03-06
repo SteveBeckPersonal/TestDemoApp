@@ -29,12 +29,13 @@ namespace ServiceLayer_Contract
             
             IPactVerifier pactVerifier = new PactVerifier(config);
             pactVerifier.ServiceProvider("WeatherService", _fixture.ServerUri)
-                .WithFileSource(fileInfo)
+                .WithPactBrokerSource(_fixture.BrokerBaseUri, options => {
+                    options.TokenAuthentication(_fixture.PactBrokerToken);
+                    options.PublishResults(_fixture.PactVersion);
+                })
                 .WithProviderStateUrl(new Uri(_fixture.ServerUri,"/provider-states"))
                 .WithRequestTimeout(TimeSpan.FromMinutes(5))
                 .Verify();
-
-            //use the pactVerifier to verify contract with a local contract
 
         }
     }

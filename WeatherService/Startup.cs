@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using WeatherService.Contexts;
 
 namespace WeatherService
@@ -33,10 +34,20 @@ namespace WeatherService
             });
         }
 
-        public void Configure(WebApplication app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            using (var scope = app.Services.CreateScope())
+            app.UseSwagger();
+            app.UseSwaggerUI();
+
+
+            app.UseCors("Local");
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+            using (var scope = app.ApplicationServices.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
@@ -50,20 +61,13 @@ namespace WeatherService
                     logger.LogError(ex, "An error occurred creating the DB.");
                 }
             }
-            
-            app.UseSwagger();
-            app.UseSwaggerUI();
 
+            app.UseRouting();
 
-            app.UseCors("Local");
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
-            app.MapControllers();
-
-            app.Run();
+            app.UseEndpoints(endpoints => 
+            {
+                endpoints.MapControllers();
+            });
 
         }
     }

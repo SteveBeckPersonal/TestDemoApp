@@ -28,7 +28,9 @@ namespace WeatherService.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<ActionResult> Get()
         {
-            return Ok(await _context.Forecasts.ToArrayAsync());
+            var result = await _context.Forecasts.ToArrayAsync();
+            result = result.OrderBy(result => result.Date).ToArray();
+            return Ok(result);
         }
 
         [HttpPost(Name = "AddWeatherForecast")]

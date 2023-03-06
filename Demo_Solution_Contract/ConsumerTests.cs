@@ -2,7 +2,9 @@ using System.Net.Mail;
 using Demo_Solution.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using PactNet;
 using Xunit.Abstractions;
 
@@ -19,11 +21,15 @@ namespace Demo_Solution_Contract
             {
                 PactDir = Path.Join("..", "..", "..", "pacts"),
                 LogLevel = PactLogLevel.Debug,
-                Outputters = new[] { new XUnitOutput(output) }
+                Outputters = new[] { new XUnitOutput(output) },
+                DefaultJsonSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }
 
             };
 
-            var pact = PactNet.Pact.V3("Demo_Solution", "ServiceLayer", config);
+            var pact = PactNet.Pact.V3("Demo_Solution", "WeatherService", config);
             _pactBuilder = pact.UsingNativeBackend();
         }
 
@@ -49,7 +55,7 @@ namespace Demo_Solution_Contract
             WeatherForecast[] weatherForecasts = new WeatherForecast[] { weatherForecast, weatherForecast2 };
 
             _pactBuilder.UponReceiving("A GET that returns all weather forecasts")
-                .Given($"Two weather requests exist with ids: [{weatherForecast.Id},{weatherForecast2.Id}]")
+                .Given($"Two weather requests exist with ids {weatherForecast.Id},{weatherForecast2.Id}")
                 .WithRequest(HttpMethod.Get, $"/weatherforecast")
                 .WillRespond()
                 .WithJsonBody(weatherForecasts);
