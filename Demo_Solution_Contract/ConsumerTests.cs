@@ -49,7 +49,7 @@ namespace Demo_Solution_Contract
             WeatherForecast[] weatherForecasts = new WeatherForecast[] { weatherForecast, weatherForecast2 };
 
             _pactBuilder.UponReceiving("A GET that returns all weather forecasts")
-                .Given($"Two weather requests exist with ids: [{weatherForecast.Id},{weatherForecast2}]")
+                .Given($"Two weather requests exist with ids: [{weatherForecast.Id},{weatherForecast2.Id}]")
                 .WithRequest(HttpMethod.Get, $"/weatherforecast")
                 .WillRespond()
                 .WithJsonBody(weatherForecasts);
@@ -65,7 +65,7 @@ namespace Demo_Solution_Contract
 
             await _pactBuilder.VerifyAsync(async context =>
             {
-                configs["AggregatorService"] = context.MockServerUri.ToString();
+                configs["WeatherService"] = context.MockServerUri.ToString();
                 var forecastService = new ForecastService(configs);
                 var foreacts = await forecastService.GetWeatherForecasts();
                 Assert.True(foreacts.Any());

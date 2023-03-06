@@ -1,6 +1,7 @@
 ﻿
 
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -30,10 +31,13 @@ namespace WeatherService_Contract.Fixtures
 
 
             ServerUri = new Uri(configs["ServerUri"]);
-            BrokerBaseUri = new Uri(configs["BrokerBaseUri"]);
-            PactBrokerToken = Environment.GetEnvironmentVariable("PACT_BROKER_TOKEN");
+            //BrokerBaseUri = new Uri(configs["BrokerBaseUri"]);
+            //PactBrokerToken = Environment.GetEnvironmentVariable("PACT_BROKER_TOKEN");
+
+                 
 
             var application = new MyWebApplication();
+            TestServer server = application.Server;
         }
 
     }

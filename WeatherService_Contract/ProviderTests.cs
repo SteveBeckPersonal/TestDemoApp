@@ -25,7 +25,17 @@ namespace ServiceLayer_Contract
                 LogLevel = PactNet.PactLogLevel.Debug
             };
 
+            FileInfo fileInfo = new FileInfo(@"pacts/Demo_Solution-ServiceLayer.json");
+            
             IPactVerifier pactVerifier = new PactVerifier(config);
+            pactVerifier.ServiceProvider("WeatherService", _fixture.ServerUri)
+                .WithFileSource(fileInfo)
+                .WithProviderStateUrl(new Uri(_fixture.ServerUri,"/provider-states"))
+                .WithRequestTimeout(TimeSpan.FromMinutes(5))
+                .Verify();
+
+            //use the pactVerifier to verify contract with a local contract
+
         }
     }
 }
