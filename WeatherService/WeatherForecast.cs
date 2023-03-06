@@ -1,7 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace WeatherService
 {
+    [PrimaryKey("Id")]
     public class WeatherForecast
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }

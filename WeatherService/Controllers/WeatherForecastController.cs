@@ -1,4 +1,7 @@
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WeatherService.Contexts;
 
 namespace WeatherService.Controllers
 {
@@ -12,22 +15,42 @@ namespace WeatherService.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ForecastContext _context;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ForecastContext forecastContext)
         {
             _logger = logger;
+            _context = forecastContext;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast[]))]
+        [Produces(MediaTypeNames.Application.Json)]
+        public async Task<ActionResult> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Ok(await _context.Forecasts.ToArrayAsync());
+        }
+
+        [HttpPost(Name = "AddWeatherForecast")]
+        public async Task<ActionResult> Post(WeatherForecast forecast)
+        {
+            _context.Forecasts.Add(forecast);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("{id}", Name = "RemoveWeatherForecast")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var forecast = _context.Forecasts.Where(x => x.Id.Equals(id)).FirstOrDefault();
+            if (forecast == null) 
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+                return NotFound();
+            }
+
+            _context.Forecasts.Remove(forecast);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿@page "/fetchdata"
 @using System.Text.Json
-@inject HttpClient Http
-@inject IConfiguration Configuration
-
+@using Demo_Solution.Components
+@using Demo_Solution.Services;
+@inject ForecastService forecastService;
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -23,6 +23,7 @@ else
                 <th>Temp. (C)</th>
                 <th>Temp. (F)</th>
                 <th>Summary</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -33,10 +34,27 @@ else
                     <td>@forecast.TemperatureC</td>
                     <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
+                    <td><button @onclick="() => HandleRemoveAsync(forecast.Id)">Remove</button></td>
                 </tr>
             }
         </tbody>
     </table>
+    <h3>Add Forecast</h3>
+    <EditForm Model=@weatherForecast OnValidSubmit=@HandleValidSubmit>
+        <div>
+            <label for="Date">Date</label>
+            <InputDate id="Date" @bind-Value="weatherForecast.Date" />
+        </div>
+        <div>
+            <label for="Date">Temp (C)</label>
+            <InputNumber id="Temp" @bind-Value="weatherForecast.TemperatureC" />
+        </div>
+        <div>
+            <label for="Summary">Summary</label>
+            <InputText id="Summary" @bind-Value="weatherForecast.Summary" />
+        </div>
+        <button type="submit">Save</button>
+    </EditForm>
 }
 
 @code {
@@ -44,23 +62,24 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-
-        var client = new HttpClient();
-        client.BaseAddress = new Uri(Configuration["AggregatorService"]);
-
-
-        var response = await client.GetAsync("weatherforecast");
-        forecasts = await response.Content.ReadFromJsonAsync<WeatherForecast[]>();
+        forecasts = await forecastService.GetWeatherForecasts();
     }
 
-    public class WeatherForecast
+    private async void HandleRemoveAsync(Guid id)
     {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        await forecastService.DeleteForecast(id);
+        forecasts = await forecastService.GetWeatherForecasts();
+        StateHasChanged();
     }
+
+    private WeatherForecast weatherForecast = new WeatherForecast() { Date = DateTime.Now };
+
+    private async void HandleValidSubmit()
+    {
+        await forecastService.PostWeatherForecast(weatherForecast);
+        forecasts = await forecastService.GetWeatherForecasts();    
+        StateHasChanged();
+    }
+
+   
 }
