@@ -1,7 +1,7 @@
 ﻿@page "/fetchdata"
 @using System.Text.Json
 @using Demo_Solution.Services;
-@inject ForecastService forecastService;
+@inject IForecastService forecastService;
 
 <PageTitle>Weather forecast</PageTitle>
 
@@ -28,12 +28,12 @@ else
         <tbody>
             @foreach (var forecast in forecasts)
             {
-                <tr>
+                <tr test-id="row-@forecast.Id">
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
                     <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
-                    <td><button @onclick="() => HandleRemoveAsync(forecast.Id)">Remove</button></td>
+                    <td><button id="remove" @onclick="() => HandleRemoveAsync(forecast.Id)">Remove</button></td>
                 </tr>
             }
         </tbody>
@@ -60,7 +60,7 @@ else
 }
 
 @code {
-    private WeatherForecast[]? forecasts;
+    private IEnumerable<WeatherForecast> forecasts = new List<WeatherForecast>();
 
     protected override async Task OnInitializedAsync()
     {

@@ -24,7 +24,7 @@ namespace WeatherService.Controllers
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(WeatherForecast[]))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<WeatherForecast>))]
         [Produces(MediaTypeNames.Application.Json)]
         public async Task<ActionResult> Get()
         {
