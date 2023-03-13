@@ -1,0 +1,26 @@
+﻿<h1>Counter</h1>
+
+<p role="status">Current count: @CurrentCount</p>
+
+<button test-id="increment" class="btn btn-primary" @onclick="IncrementCount">+</button>
+<button test-id="abatement" class="btn btn-primary" @onclick="CountAbatement">-</button>
+
+@code {
+
+
+    [Parameter]
+    public int CurrentCount { get; set; } = 0;
+
+    private void IncrementCount()
+    {
+        CurrentCount++;
+    }
+
+    private void CountAbatement()
+    {
+        if (CurrentCount > 0)
+        {
+            CurrentCount--;
+        }
+    }
+}

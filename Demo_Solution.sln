@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo_Solution_Contract", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WeatherService_Contract", "WeatherService_Contract\WeatherService_Contract.csproj", "{FC37966A-1652-4275-9AFA-BAC3ADD16DE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo_Solution_Tests", "Demo_Solution_Tests\Demo_Solution_Tests.csproj", "{34BD2F32-6289-4BAF-A9FF-50E9FD38E33A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{FC37966A-1652-4275-9AFA-BAC3ADD16DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC37966A-1652-4275-9AFA-BAC3ADD16DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC37966A-1652-4275-9AFA-BAC3ADD16DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34BD2F32-6289-4BAF-A9FF-50E9FD38E33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34BD2F32-6289-4BAF-A9FF-50E9FD38E33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34BD2F32-6289-4BAF-A9FF-50E9FD38E33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34BD2F32-6289-4BAF-A9FF-50E9FD38E33A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

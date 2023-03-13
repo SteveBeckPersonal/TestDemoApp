@@ -25,8 +25,6 @@ namespace WeatherService_Contract
                 .AddEnvironmentVariables()
                  .Build();
 
-            //configs["CosmosDb:EndpointUrl"] = BookingProviderFixture.CosmosEndpoint;
-            //configs["CosmosDb:PrivateKey"] = BookingProviderFixture.CosmosKey;
 
             this.inner = new Startup(configs);
             Configuration = configuration;

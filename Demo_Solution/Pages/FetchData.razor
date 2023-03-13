@@ -1,6 +1,5 @@
 ﻿@page "/fetchdata"
 @using System.Text.Json
-@using Demo_Solution.Components
 @using Demo_Solution.Services;
 @inject ForecastService forecastService;
 
@@ -39,6 +38,9 @@ else
             }
         </tbody>
     </table>
+
+    <UserTable Items="@forecasts"></UserTable>
+
     <h3>Add Forecast</h3>
     <EditForm Model=@weatherForecast OnValidSubmit=@HandleValidSubmit>
         <div>
