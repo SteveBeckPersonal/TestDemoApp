@@ -50,46 +50,26 @@ A local endpoint is then used to mock the service, and the Consumer Application 
 Pact.io will use return the resposne specified in the builder and will then verify the schema matches, and finally generate the Contract.
 After the contract has been created it must be shared with the broker via a REST request to the broker.
 
-```csharp
-public ApiTest(ITestOutputHelper output)
-        {
-            products = new List<object>()
-            {
-                new { id = 9, type = "CREDIT_CARD", name = "GEM Visa", version = "v2" },
-                new { id = 10, type = "CREDIT_CARD", name = "28 Degrees", version = "v1" }
-            };
+[Consumer Tests] (https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/Demo_Solution_Contract/ConsumerTests.cs)
 
-            var Config = new PactConfig
-            {
-                PactDir = Path.Join("..", "..", "..", "..", "..", "pacts"),
-                LogDir = "pact_logs",
-                Outputters = new[] { new XUnitOutput(output) },
-                DefaultJsonSettings = new JsonSerializerSettings
-                {
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
-                }
-            };
+## Provider Tests
 
-            pact = Pact.V3("ApiClient", "ProductService", Config).UsingNativeBackend(port);
-            ApiClient = new ApiClient(new System.Uri($"http://localhost:{port}"));
-        }
+[Provider Tests](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/WeatherService_Contract/ProviderTests.cs)
 
-        [Fact]
-        public async void GetAllProducts()
-        {
-            // Arange
-            pact.UponReceiving("A valid request for all products")
-                    .Given("There is data")
-                    .WithRequest(HttpMethod.Get, "/api/products")
-                .WillRespond()
-                    .WithStatus(HttpStatusCode.OK)
-                    .WithHeader("Content-Type", "application/json; charset=utf-8")
-                    .WithJsonBody(new TypeMatcher(products));
+Provider tests require a locally hosted instance of the AUT which allows the tester to inject or replace dependencies with mocks, as well as access the
+databases or contexts of the application.
 
-            await pact.VerifyAsync(async ctx => {
-                var response = await ApiClient.GetAllProducts();
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            });
-        }
+[Test Startup](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/WeatherService_Contract/TestStartup.cs)
 
-```
+The ConfigureServices function in the TestStartup is used for mocking services, and DB connections / contexts.
+The Configure function is used for injecting Middleware such as the ProviderStateMiddleware or AuthServices.
+
+All interactions are tested via a single [Test], the main source of effort with Provider tests is to ensure external services are adequately mocked, and the data
+required for the test is present in application.
+
+### Provider States
+
+[Provider State Middleware](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/WeatherService_Contract/Middleware/ProviderStateMiddleware.cs)
+
+Provider states are injected through the startup as middleware, and are executed by Pact.io before the interaction test runs. This is done by mapping the Given statements
+from the Contract to an action which generates or injects the required data into the system for the test.
