@@ -50,7 +50,7 @@ A local endpoint is then used to mock the service, and the Consumer Application 
 Pact.io will use return the resposne specified in the builder and will then verify the schema matches, and finally generate the Contract.
 After the contract has been created it must be shared with the broker via a REST request to the broker.
 
-[Consumer Tests] (https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/Demo_Solution_Contract/ConsumerTests.cs)
+[Consumer Tests](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/Demo_Solution_Contract/ConsumerTests.cs)
 
 ## Provider Tests
 
