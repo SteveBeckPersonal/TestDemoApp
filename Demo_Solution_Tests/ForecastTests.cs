@@ -90,8 +90,8 @@ namespace Demo_Solution_Tests
 			var weather2 = new WeatherForecast()
 			{
 				Date = DateTime.Now.AddDays(1),
-				TemperatureC = 32,
-				Summary = "Hot"
+				TemperatureC = 13,
+				Summary = "Cool"
 			};
 
 			// Arrange: render the Counter.razor component

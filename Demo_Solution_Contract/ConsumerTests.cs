@@ -64,9 +64,7 @@ namespace Demo_Solution_Contract
             var configs = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
                             .AddJsonFile("appsettings.json")
-                            .Build();
-
-            
+                            .Build();            
 
 
             await _pactBuilder.VerifyAsync(async context =>

@@ -38,6 +38,7 @@ namespace WeatherService_Contract.Middleware
 
         public async Task SetForecastData(IDictionary<string, string> parameters, string state) 
         {
+            _forecastContext.Database.EnsureCreated();
             _forecastContext.RemoveRange(_forecastContext.Forecasts);
             _forecastContext.SaveChanges();
             var forecasts = await GetTestData<WeatherForecast[]>(state);
