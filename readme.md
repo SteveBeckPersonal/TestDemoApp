@@ -31,8 +31,8 @@ In practice, a common way of implementing contract tests (and the way Pact does 
 
 ## Terminology
 
-- Consumer - the service or application which calls the integration request.
-- Provider - the service which processes the request and returns a response.
+- Consumer - the service or application which calls the integration request. In this example the Demo_Solution is the consumer.
+- Provider - the service which processes the request and returns a response. In this example the WeatherService is the provider.
 - Contract - A collection of interactions performed by the consumer, containing: endpoint, request, and expected response information to test against the provider.
 - Broker - A middleman tool which manages the contracts and can share the contract with the provider, as well as receive the results from the provider tests.
 
