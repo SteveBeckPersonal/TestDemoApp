@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 using WeatherService.Contexts;
 
 namespace WeatherService
@@ -32,6 +34,8 @@ namespace WeatherService
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
+
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
