@@ -12,9 +12,10 @@ It is a simple Blazor demo application, with a asp.net 6.0 backend which uses SQ
 
 ## Setup
 
-Ensure that the SQL Connection string in the appsettings files is set correctly to your instance of SQL.
-Otherwise the application should launch simply, and contract testing will work if the appsettings files are updated accordingly.
-Pactbroker can be changed in the appsettings.json of the provider test project.
+- Ensure that the SQL Connection string in the appsettings files is set correctly to your instance of SQL.
+- The application can be launched by setting a multi startup of the Demo_Solution.csproj and the WeatherService.csproj
+- Contract testing will work if the appsettings files are updated accordingly.
+- Pactbroker can be changed in the appsettings.json of the provider test project.
 
 # Contract Testing
 
