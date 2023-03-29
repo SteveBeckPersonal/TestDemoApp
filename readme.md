@@ -50,16 +50,16 @@ A local endpoint is then used to mock the service, and the Consumer Application 
 Pact.io will use return the resposne specified in the builder and will then verify the schema matches, and finally generate the Contract.
 After the contract has been created it must be shared with the broker via a REST request to the broker.
 
-[Consumer Tests](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/Demo_Solution_Contract/ConsumerTests.cs)
+[Consumer Tests](https://github.com/SteveBeckPersonal/TestDemoApp/blob/main/Demo_Solution_Contract/ConsumerTests.cs)
 
 ## Provider Tests
 
-[Provider Tests](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/WeatherService_Contract/ProviderTests.cs)
+[Provider Tests](https://github.com/SteveBeckPersonal/TestDemoApp/blob/main/WeatherService_Contract/ProviderTests.cs)
 
 Provider tests require a locally hosted instance of the AUT which allows the tester to inject or replace dependencies with mocks, as well as access the
 databases or contexts of the application.
 
-[Test Startup](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/WeatherService_Contract/TestStartup.cs)
+[Test Startup](https://github.com/SteveBeckPersonal/TestDemoApp/blob/main/WeatherService_Contract/TestStartup.cs)
 
 The ConfigureServices function in the TestStartup is used for mocking services, and DB connections / contexts.
 The Configure function is used for injecting Middleware such as the ProviderStateMiddleware or AuthServices.
@@ -69,7 +69,7 @@ required for the test is present in application.
 
 ### Provider States
 
-[Provider State Middleware](https://dev.azure.com/haefelesoftware/TestAutomation/_git/Automation_Application?path=/WeatherService_Contract/Middleware/ProviderStateMiddleware.cs)
+[Provider State Middleware](https://github.com/SteveBeckPersonal/TestDemoApp/blob/main/WeatherService_Contract/Middleware/ProviderStateMiddleware.cs)
 
 Provider states are injected through the startup as middleware, and are executed by Pact.io before the interaction test runs. This is done by mapping the Given statements
 from the Contract to an action which generates or injects the required data into the system for the test.
