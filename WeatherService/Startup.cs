@@ -24,7 +24,7 @@ namespace WeatherService
             var t = Configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ForecastContext>(options =>
-                            options.UseSqlServer(t));
+                            options.UseInMemoryDatabase("MyDatabase"));
 
             services.AddCors(policy => {
                 policy.AddPolicy("Local", builder =>

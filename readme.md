@@ -7,13 +7,14 @@ It is a simple Blazor demo application, with a asp.net 6.0 backend which uses SQ
 
 ## Requirements
 
-- Sql Server - or container
+- Sql Server has been set to use EF Core in Memory db
 - Visual Studio
 
 ## Setup
 
 Ensure that the SQL Connection string in the appsettings files is set correctly to your instance of SQL.
 Otherwise the application should launch simply, and contract testing will work if the appsettings files are updated accordingly.
+Pactbroker can be changed in the appsettings.json of the provider test project.
 
 # Contract Testing
 
