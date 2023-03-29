@@ -7,12 +7,11 @@ It is a simple Blazor demo application, with a asp.net 6.0 backend which uses SQ
 
 ## Requirements
 
-- Sql Server has been set to use EF Core in Memory db
 - Visual Studio
 
 ## Setup
 
-- Ensure that the SQL Connection string in the appsettings files is set correctly to your instance of SQL.
+- Sql Server has been set to use EF Core in Memory db
 - The application can be launched by setting a multi startup of the Demo_Solution.csproj and the WeatherService.csproj
 - Contract testing will work if the appsettings files are updated accordingly.
 - Pactbroker can be changed in the appsettings.json of the provider test project.
