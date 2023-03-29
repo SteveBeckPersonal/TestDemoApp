@@ -33,8 +33,8 @@ namespace WeatherService_Contract.Fixtures
 
 
             ServerUri = new Uri(configs["ServerUri"]);
-            BrokerBaseUri = new Uri(configs["BrokerBaseUri"]);
-            PactBrokerToken = configs["PactBrokerToken"];
+            //BrokerBaseUri = new Uri(configs["BrokerBaseUri"]);
+            //PactBrokerToken = configs["PactBrokerToken"];
             PactVersion = configs["PROVIDER_VERSION"];
 
 

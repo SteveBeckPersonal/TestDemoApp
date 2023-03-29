@@ -10,6 +10,11 @@ namespace ServiceLayer_Contract
         private ITestOutputHelper OutputHelper { get; }
         private readonly WeatherServiceProviderFixture _fixture;
 
+        public void GetContract() 
+        {
+
+        }
+
         public ProviderTests(WeatherServiceProviderFixture fixture, ITestOutputHelper outputHelper) 
         {
             _fixture = fixture;
@@ -29,10 +34,7 @@ namespace ServiceLayer_Contract
             
             IPactVerifier pactVerifier = new PactVerifier(config);
             pactVerifier.ServiceProvider("WeatherService", _fixture.ServerUri)
-                .WithPactBrokerSource(_fixture.BrokerBaseUri, options => {
-                    options.TokenAuthentication(_fixture.PactBrokerToken);
-                    options.PublishResults(_fixture.PactVersion);
-                })
+                .WithFileSource(new FileInfo("pacts/Demo_Solution-WeatherService.json"))
                 .WithProviderStateUrl(new Uri(_fixture.ServerUri,"/provider-states"))
                 .WithRequestTimeout(TimeSpan.FromMinutes(5))
                 .Verify();

@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="..\Demo_Solution_Contract\pacts\Demo_Solution-WeatherService.json" Link="pacts\Demo_Solution-WeatherService.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.14" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
@@ -32,6 +38,7 @@
 
   <ItemGroup>
     <Folder Include="Mocks\" />
+    <Folder Include="pacts\" />
   </ItemGroup>
 
   <ItemGroup>
